@@ -1,0 +1,62 @@
+body {
+    font-family: "Roboto", sans-serif;
+    margin: 0;
+    background-color: rgb(128, 255, 212);
+
+    justify-content: center;
+    /* display: flex; */
+}
+.main{
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 3px 3px 5px #00000012;
+    width: 95%;
+    padding-bottom: 40px;
+    padding-top: 40px;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 0 0 25px 25px;
+}
+.inp input{
+    border-radius: 7px;
+    height: 25px;
+    width: 192px;
+    margin-left: auto;
+    margin-right: auto;
+    border: solid 2px #00000033;
+}
+.inp{
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+.top{
+    background-color: white;
+    width: 100%;
+    height: 50px;
+    padding-top: 10px;
+    padding-left: 25px;
+}
+h2{
+    margin: 0;
+}
+.btn {
+    width: 200px;
+    height: 50px;
+    background-color: #48bdaf;
+    color: white;
+    font-size: 16px;
+    margin: 40px auto 0; /* Упрощение отступов */
+    display: grid;
+    align-items: center;
+    border: none;
+    border-radius: 16px;
+    font-weight: bold;
+    box-shadow: 3px 3px 5px #00000012;
+    cursor: pointer; /* Курсор при наведении */
+}
+/* form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+} */

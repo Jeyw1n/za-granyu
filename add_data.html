@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавление данных</title>
+    <link rel="stylesheet" href="./css/ad.css">
+</head>
+<body>
+    <div class="headr">
+        <h2 class="zg">Ввод новых данных</h2>
+        <p class="dgnz">Ваш диагноз:</p>
+    </div>
+    <div class="inp">
+        <form action="#" id="form">
+            <input type="file" name="sugarimg" id="sugar" accept="image/*">
+            <label for="media" id="sugar_add" class="file-upload-label">Сфотографируйте дисплей глюкометра</label>
+            <div id="alt_sugar" style="display: none;">
+                <p>Введите показатели вашего сахара</p>
+                <input type="text" name="sugar" id="altsugar">
+            </div>
+            <input type="button" id="i_dont" value="Я не могу сфотографировать">
+            <p class="davl">Введите показатели вашего артериального давления</p>
+            <input type="text" id="davl">
+            <p class="pulse">Введите показатели вашего сердечного ритма</p>
+            <input type="text" id="pulse">
+            <input type="button" value="Сохранение данных" class="btnsafe">
+        </form>
+    </div>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="./js/jquery-3.7.1.min.js"></script>
+    <script>
+        $("#i_dont").click(function () {
+            $("#sugar_add").css("display", "none");
+            $("#alt_sugar").css("display", "block");
+            $("#i_dont").css("display", "none");
+        });
+
+        $("#sugar_add").click(function () {
+            $("#sugar").click();
+        });
+
+        $("#form").submit(function (e) {
+            e.preveventDefault();
+            if ($("#sugar_add").css("display") === "none") {
+                let sugar = $("#altsugar").val();
+            } else {
+                let sugar = $("#sugar").val();
+            }
+            let davl = $("#davl").val();
+            let pulse = $("#pulse").val();
+            $.ajax({
+                type: "POST",
+                url: "core.php",
+                data: {sugar: sugar, davl: davl, pulse:pulse},
+                success: function () {
+                    alert("Данные успешно добавлены");
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    console.error('Ошибка AJAX: ' + error);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

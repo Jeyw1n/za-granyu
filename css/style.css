@@ -1,0 +1,100 @@
+@media (max-width:540px){
+    /* *{
+        margin: 0;
+        padding: 0;
+    }
+    .headr{
+        width: 100%;
+        text-align: center;
+        background-color: aquamarine;
+        height: 75px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .texthdr{
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100px;
+        padding-top: 25px;
+    }
+    .nav{
+        width: 100%;
+        background-color: aquamarine;
+        margin-left: auto;
+        margin-right: auto;
+        height: 75px;
+        display: flex;
+        justify-content: center;
+    }
+    .b1,.b2,.b3{
+        margin-top: 25px;
+        border: 1px solid black;
+        width: 60px;
+        height: 30px;
+        text-align: center;
+    }
+    .b1{
+        margin-right: 50px;
+    }
+    .b3{
+        margin-left: 50px;
+    } */
+    body {
+        font-family: "Roboto", sans-serif;
+        margin: 0;
+        background-color: rgb(128, 255, 212);
+    
+        /* justify-content: center; */
+        /* display: flex; */
+    }
+    .main{
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 3px 3px 5px #00000012;
+        width: 50%;
+        padding-bottom: 40px;   
+        margin-top: 200px;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        justify-content: center;
+    }
+    .btn{
+        width: 170px;
+        height: 40px;
+        margin: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #48bdaf;
+        color: white;
+        font-size: 16px;
+        margin: 40px auto 0; /* Упрощение отступов */
+        display: grid;
+        align-items: center;
+        border: none;
+        border-radius: 16px;
+        font-weight: bold;
+        box-shadow: 3px 3px 5px #00000012;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .np{
+        position: absolute;
+        bottom: 0;
+        left: 0; /* Или right: 0; если нужно */
+        width: 100%; /* Убедитесь, что ваш div занимает всю ширину */
+        height: 50px;
+        background-color: white ;
+        box-shadow: 3px 3px 5px #00000012;
+    }
+    .imag{
+        width: 30px;
+        height: 30px;
+        margin-top:10px;
+        margin-left: 20px;
+    }
+}
