@@ -20,7 +20,7 @@
     </div>
     <div class="content-box">
         <form action="" id="form">
-            <p id="result"></p>
+            <p id="result" style="font-size: 12px;">Тест</p>
             <div class="in_box" id="photo">
                 <label for="">ИИ Камера</label><br>
                 <input type="file" name="photo" id="photo_data">
@@ -49,7 +49,8 @@
     
         $("#form").submit(function(e) {
             e.preventDefault();
-    
+            
+            $("#result").html("Подождите, обрабатываем данные...");
             // Создаем новый объект FormData
             var formData = new FormData(this); // 'this' указывает на форму
     

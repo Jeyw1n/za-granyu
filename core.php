@@ -49,8 +49,13 @@ if ($isAjaxRequest) {
                 if (curl_errno($ch)) {
                     echo 'Ошибка: ' . curl_error($ch);
                 } else {
-                    // Output JSON response
-                    echo $response;
+                    $decodedResponse = json_decode($response, true);
+                    if (json_last_error() !== JSON_ERROR_NONE) {
+                        echo 'Ошибка декодирования JSON: ' . json_last_error_msg();
+                    } else {
+                        echo $decodedResponse; // Или обработайте ответ как вам нужно
+                        $AIdata = $decodedResponse['labels'];
+                    }
                 }
 
                 // Close cURL
