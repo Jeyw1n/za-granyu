@@ -1,69 +1,87 @@
 <?php
-    session_start();
-    $isAjaxRequest = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
-    if ($isAjaxRequest) {
-        $host = "localhost";
-        $log = "root";
-        $password_sql = "";
-        $database = "bd";
-        $conn = mysqli_connect($host, $log, $password_sql, $database);
-        
-        if(!$conn){
-            echo("Connection error.");
-            exit();
-        }
-        $login = $_SESSION['user'];
-        $sql = "SELECT * FROM medicine WHERE login = $login";
-        $result = mysqli_query($conn, $sql);
-        $med_data = mysqli_fetch_assoc($result);
-        $med_id = $med_data['id'];
+session_start();
+$isAjaxRequest = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
+if ($isAjaxRequest) {
+    $host = "localhost";
+    $log = "admin";
+    $password_sql = "_WC,?@y&W&N;'|sh0<Q]";
+    $database = "db";
+    $conn = mysqli_connect($host, $log, $password_sql, $database);
+    
+    if (!$conn) {
+        echo("Connection error.");
+        exit();
+    }
 
-        $action = $_POST['action'];
-        switch ($action) {
-            case "add_data":
-                $sugar = $_POST['sugar'];
-                $photo = $_POST['photo'];
-                $davl = $_POST['davl'];
-                $pulse = $_POST['pulse'];
+    $med_id = 5;
+    $action = $_POST['action'];
 
-                if($sugar == "") {
-                    $sugar = 4;
-                }
-                if ($photo == "") {
-                    $photo = NULL;
-                }
-                if ($davl == "") {
-                    $davl = 120/80;
-                }
-                if ($pulse == "") {
-                    $pulse = 65;
-                }
+    switch ($action) {
+        case "add_data":
+            $sugar = $_POST['sugar'] ?: 4; // Default to 4 if empty
+            $davl = $_POST['davl'] ?: '120/80'; // Default to 120/80 if empty
+            $pulse = $_POST['pulse'] ?: 65; // Default to 65 if empty
+            $photo = $_FILES['photo'] ?? null; // Get the photo from the files
 
-                if (exif_imagetype($sugar) !== false) {
-                    //Отправка нейросети по API.
-                }
+            if ($photo && $photo['error'] === UPLOAD_ERR_OK) {
+                // Path to the uploaded file
+                $fileTmpPath = $photo['tmp_name'];
+                $fileName = $photo['name'];
 
-                $sql = "INSERT INTO user_data (id_data, id_user, sugar, davl, pulse) VALUES (NULL, NULL, '$sugar', '$davl', '$pulse')";
-                if (mysqli_query($conn, $sql)) {
-                    echo "Данные успешно отправленны!";
+                // URL of your FastAPI server
+                $url = 'http://localhost:8000/detect/';
+
+                // Initialize cURL
+                $ch = curl_init();
+
+                // Set cURL options
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, [
+                    'file' => new CURLFile($fileTmpPath, $photo['type'], $fileName)
+                ]);
+
+                // Execute the request
+                $response = curl_exec($ch);
+
+                // Check for errors
+                if (curl_errno($ch)) {
+                    echo 'Ошибка: ' . curl_error($ch);
                 } else {
-                    echo "Ошибка: " . $sql . "<br>" . mysqli_error($conn);
+                    // Output JSON response
+                    echo $response;
                 }
-                break;
-            case "add_patient":
-                $name = $_POST['name'];
-                $diagnos = $_POST['diagnos'];
 
-                $sql = "INSERT INTO patient (tg_id, username, id_pharmaceft, diagnose, date) VALUES (NULL, '$name', $med_id, '$diagnos', NOW()";
-                if (mysqli_query($conn, $sql)) {
-                    echo "Успешно зарегистрирован. Для приглашения используйте следующую команду: /start?id=$med_id";
-                } else {
-                    echo "Ошибка: " . $sql . "<br>" . mysqli_error($conn);
-                }
-                break;
-            default:
-                echo "Неизвестная команда";
-                break;
-        }
+                // Close cURL
+                curl_close($ch);
+            } else {
+                echo "Ошибка загрузки файла";
+            }
+
+            $sql = "INSERT INTO user_data (id_data, id_patient, time, sugar, aisugar, pressure, pulse) VALUES (NULL, '5', NOW(), '$sugar', '$AIdata', '$davl', '$pulse')";
+            if (mysqli_query($conn, $sql)) {
+                echo "Данные успешно отправленны!";
+            } else {
+                echo "Ошибка: " . $sql . "<br>" . mysqli_error($conn);
+            }
+            break;
+
+        case "add_patient":
+            $name = $_POST['name'];
+            $diagnos = $_POST['diagnos'];
+
+            $sql = "INSERT INTO patient (tg_id, username, id_pharmaceft, diagnose, date) VALUES (NULL, '$name', $med_id, '$diagnos', NOW())"; // Added closing parenthesis
+            if (mysqli_query($conn, $sql)) {
+                echo "Успешно зарегистрирован. Для приглашения используйте следующую команду: /start?id=$med_id";
+            } else {
+                echo "Ошибка: " . $sql . "<br>" . mysqli_error($conn);
+            }
+            break;
+
+        default:
+            echo "Неизвестная команда";
+            break;
     }
     mysqli_close($conn);
+}

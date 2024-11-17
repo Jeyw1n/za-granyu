@@ -25,6 +25,7 @@
                 <input type="text" id="diagnos">
             </div>
             <button class="btn">Добавить</button>
+            <p id="result"></p>
         </form>
     </div>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -39,8 +40,7 @@
                 url: "core.php",
                 data: {name: name, diagnos: diagnos, action: "add_pacient"},
                 success: function () {
-                    alert("Данные успешно добавлены");
-                    location.reload();
+                    $("#result").html("Данные успешно добавлены");
                 },
                 error: function(xhr, status, error) {
                     console.error('Ошибка AJAX: ' + error);

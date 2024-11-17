@@ -1,48 +1,77 @@
 @media (max-width:540px){
-    *{
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    body {
+        font-family: "Roboto", sans-serif;
         margin: 0;
-        padding: 0;
+        /* background-color: rgb(128, 255, 212); */
+        background: linear-gradient(45deg,rgb(189, 189, 255),#e3fbf6);
+        background-size: 400% 400%;
+        animation: gradient-animation 10s ease infinite;
     }
     .main{
-        width: 100%;
-        height: 645px;
-        background-color: aquamarine;
-        padding-top: 250px;
-    }
-    .wind{
-        width: 250px;
-        height: 300px;
         background-color: white;
+        width: 75%;
+        height: 100px;
         margin-left: auto;
         margin-right: auto;
-        text-align: center;
-        display: table;
+        box-shadow: 3px 3px 5px #00000012;
+        border-radius: 12px;
+        display: flex;
+        justify-content: center;
+        padding-top: 30px;
+        padding-bottom: 90px;
+        margin-top: 200px;
     }
-    .lab{
-        padding-top: 20px;
-        padding-bottom: 20px;
-        font-size: 24px;
+    @keyframes gradient-animation {
+        0% {
+            background-position:50%;
+        }
+        25%{
+            background-position:75%;
+        }
+        50% {
+            background-position:100%;
+        }
+        75%{
+            background-position:75%;
+        }
+        100% {
+            background-position:50%;
+        }
     }
-    #login{
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .inp input{
+        border-radius: 7px;
+        height: 25px;
+        width: 192px;
+        margin-left: auto;
+        margin-right: auto;
+        border: solid 2px #00000033;
+    }
+    .inp{
+        margin-bottom: 10px;
+    }
+    .btn {
+        /* width: 200px;
+        height: 100px;*/
+        background-color: #48bdaf;
+        color: white;
+        font-size: 16px;
+        margin: 40px auto 0; 
+        display: grid;
+        align-items: center;
         margin-top: 10px;
-        border-radius: 20px;
-        padding-left: 15px;
-        height: 30px;
-    }
-    .log{
-        margin-top: 10px;
-    }
-    #password{
-        margin-top: 10px;
-        border-radius: 20px;
-        padding-left: 15px; 
-        height: 30px;
-    }
-    #bcf{
-        width: 120px;
-        height: 50px;
-        margin-top: 15px;
-        font-size: 20px;
+        border: none;
+        border-radius: 16px;
+        font-weight: bold;
+        box-shadow: 3px 3px 5px #00000012;
+        cursor: pointer; 
+        width: 200px; /* вы можете оставить это */
+        height: auto; /* измените на auto для гибкой высоты */
+        min-height: 50px; /* задайте минимальную высоту */
+        padding: 10px; /* добавьте паддинг для увеличения общего размера */
     }
 }

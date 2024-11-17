@@ -12,55 +12,66 @@
 <body>
     <div class="top_bar">
         <div class="lb">
-            <img src="./img/back.png" alt="">
+            <img src="./img/back.png" alt="" id="back">
         </div>
         <div class="zag">
             <label for="">Добавление показаний</label>
         </div>
     </div>
     <div class="content-box">
-        <form action="">
+        <form action="" id="form">
+            <p id="result"></p>
             <div class="in_box" id="photo">
                 <label for="">ИИ Камера</label><br>
-                <input type="file" id="photo_data">
+                <input type="file" name="photo" id="photo_data">
             </div>
-            <div class="in_box" id="custom_sugar" style="display: none;">
+            <div class="in_box" id="custom_sugar">
                 <label for="">Уровень сахара</label><br>
-                <input type="text" id="custom_sugar_data"><br>
+                <input type="text" name="sugar" id="custom_sugar_data"><br>
             </div>
             <div class="in_box">
                 <label for="">Артериальное давление</label><br>
-                <input type="text" id="davl"><br>
+                <input type="text" name="davl" id="davl"><br>
             </div>
             <div class="in_box">
                 <label for="">Пульс</label><br>
-                <input type="text" id="pulse"><br>
+                <input type="text" name="pulse" id="pulse"><br>
             </div>
-            <input type="button" value="Сохранение данных" class="btn">
+            <input type="submit" value="Сохранение данных" class="btn">
         </form>
     </div>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="./js/jquery-3.7.1.min.js"></script>
     <script>
+        $("#back").click(function() {
+            window.history.back();
+        });
+    
         $("#form").submit(function(e) {
-            e.preveventDefault();
-            let sugar = $("#custom_sugar_data").val();
-            let sugar_photo = $("#photo_data").val();
-            let davl = $("#davl").val();
-            let pulse = $("#pulse").val();
+            e.preventDefault();
+    
+            // Создаем новый объект FormData
+            var formData = new FormData(this); // 'this' указывает на форму
+    
+            // Добавляем действие в FormData
+            formData.append('action', 'add_data');
+    
             $.ajax({
                 type: "POST",
                 url: "core.php",
-                data: {sugar: sugar, photo: sugar_photo, davl: davl, pulse: pulse, action: "add_data"},
-                success: function () {
-                    alert("Данные успешно добавлены");
-                    location.reload();
+                data: formData,
+                processData: false, // Не обрабатывать данные
+                contentType: false, // Не устанавливать заголовок Content-Type
+                success: function(response) {
+                    $('#result').html(response); // Отображаем ответ сервера
                 },
                 error: function(xhr, status, error) {
                     console.error('Ошибка AJAX: ' + error);
+                    $('#result').html("Произошла ошибка при отправке данных.");
                 }
             });
         });
     </script>
+    
 </body>
 </html>

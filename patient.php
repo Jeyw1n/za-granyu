@@ -5,9 +5,9 @@
         exit();
     }
     $host = "localhost";
-    $log = "root";
-    $password_sql = "";
-    $database = "bd";
+    $log = "admin";
+    $password_sql = "_WC,?@y&W&N;'|sh0<Q]";
+    $database = "db";
     $conn = mysqli_connect($host, $log, $password_sql, $database);
     if(!$conn){
         echo("Ошибка соединения.");
